@@ -10,11 +10,11 @@ declare module "@react-three/fiber" {
   }
 }
 
-const LINE_COUNT = 7;
+const LINE_COUNT = 8;
 const POINTS_PER_LINE = 160;
 const FUZZ_STRANDS = 4;
 
-const COLORS = ["#4db8ff", "#29a3e6", "#66ccff", "#3399dd", "#7ac8f5", "#55aaee"];
+const COLORS = ["#4db8ff", "#29a3e6", "#66ccff", "#7ac8f5", "#e8f4ff", "#b8d8f0"];
 
 interface LineState {
   offset: number;
@@ -34,15 +34,15 @@ const mouseNorm = { x: 0.5, y: 0.5 };
 function createLine(time: number): LineState {
   return {
     offset: Math.random() * Math.PI * 2,
-    speed: 0.0006 + Math.random() * 0.001,
-    amplitude: 0.2 + Math.random() * 0.6,
-    frequency: 0.08 + Math.random() * 0.16,
-    maxOpacity: 0.05 + Math.random() * 0.12,
-    yBase: (Math.random() - 0.5) * 1.7,
+    speed: 0.0005 + Math.random() * 0.0008,
+    amplitude: 0.15 + Math.random() * 0.5,
+    frequency: 0.06 + Math.random() * 0.14,
+    maxOpacity: 0.04 + Math.random() * 0.1,
+    yBase: (Math.random() - 0.5) * 1.8,
     phase: Math.random() * Math.PI * 2,
     colorIdx: Math.floor(Math.random() * COLORS.length),
     born: time,
-    maxLife: 22 + Math.random() * 28,
+    maxLife: 25 + Math.random() * 30,
   };
 }
 
@@ -115,20 +115,18 @@ function FlowLines() {
             Math.sin(frac * line.frequency * 6.5 + t * line.speed + line.offset) * line.amplitude * 0.55 +
             Math.cos(frac * line.frequency * 2.8 + t * line.speed * 0.45 + line.phase) * line.amplitude * 0.2;
 
-          // Mouse disturbance
           const dx = x - mx;
           const dy = (baseY + wave) - my;
           const dist = Math.sqrt(dx * dx + dy * dy);
           const infl = Math.max(0, 1 - dist / (w * 0.14));
-          const push = infl * infl * (dy > 0 ? 1 : -1) * h * 0.035;
+          const push = infl * infl * (dy > 0 ? 1 : -1) * h * 0.032;
 
-          // Tip splay — bare wire ends
           const tipF = 1 + Math.pow(Math.abs(frac - 0.5) * 2, 3) * 2;
-          const spread = sf * 0.045 * tipF;
+          const spread = sf * 0.04 * tipF;
 
           positions[j * 3]     = x;
           positions[j * 3 + 1] = baseY + wave + spread + push;
-          positions[j * 3 + 2] = sf * 0.025 * tipF;
+          positions[j * 3 + 2] = sf * 0.02 * tipF;
         }
 
         geo.attributes.position.needsUpdate = true;
@@ -159,15 +157,25 @@ const AnimatedBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 50 }}
-        dpr={[1, 2]}
-        style={{ background: "transparent" }}
-        gl={{ alpha: true, antialias: true }}
-      >
-        <FlowLines />
-      </Canvas>
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 0,
+        pointerEvents: "none",
+        background: "#050d1a",
+      }}
+    >
+      <div style={{ width: "100%", height: "100%" }}>
+        <Canvas
+          camera={{ position: [0, 0, 5], fov: 50 }}
+          dpr={[1, 1.5]}
+          gl={{ antialias: true, alpha: true }}
+          style={{ background: "transparent" }}
+        >
+          <FlowLines />
+        </Canvas>
+      </div>
     </div>
   );
 };
