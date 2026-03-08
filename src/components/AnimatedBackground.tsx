@@ -124,7 +124,7 @@ function FlowLines() {
   return (
     <group>
       {geometries.map((geo, i) => (
-        <line key={i} geometry={geo} material={materials[i]} />
+        <line_ key={i} geometry={geo} material={materials[i]} />
       ))}
     </group>
   );
