@@ -3,7 +3,16 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "@/components/Header";
+import AnimatedBackground from "@/components/AnimatedBackground";
 import Index from "./pages/Index";
+import Reviews from "./pages/Reviews";
+import Knowledge from "./pages/Knowledge";
+import Author from "./pages/Author";
+import Details from "./pages/Details";
+import Services from "./pages/Services";
+import Terms from "./pages/Terms";
+import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -14,11 +23,21 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AnimatedBackground />
+        <Header />
+        <main className="pt-14">
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/knowledge" element={<Knowledge />} />
+            <Route path="/author" element={<Author />} />
+            <Route path="/details" element={<Details />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
