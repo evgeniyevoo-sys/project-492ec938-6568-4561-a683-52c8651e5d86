@@ -1,30 +1,39 @@
 import FadeInSection from "@/components/FadeInSection";
 
 const HeroSection = () => (
-  <section className="relative flex items-center justify-center min-h-[92vh] px-6">
+  <section
+    style={{
+      position: "relative",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minHeight: "100vh",
+      padding: "0 24px",
+    }}
+  >
+    {/* Soft blue glow */}
     <div
-      className="absolute rounded-full blur-[120px] opacity-30"
       style={{
-        width: 420,
-        height: 420,
-        background: "radial-gradient(circle, #29a3e6 0%, #4db8ff 40%, transparent 70%)",
-        top: "18%",
+        position: "absolute",
+        top: "50%",
         left: "50%",
-        transform: "translateX(-50%)",
+        transform: "translate(-50%,-50%)",
+        width: "min(600px,90vw)",
+        height: "min(600px,90vw)",
+        background: "radial-gradient(circle,rgba(77,184,255,0.08) 0%,transparent 70%)",
+        pointerEvents: "none",
       }}
     />
 
-    <div
-      className="relative max-w-2xl w-full text-center"
-      style={{ padding: "clamp(48px, 8vw, 80px) clamp(24px, 5vw, 56px)" }}
-    >
+    <div style={{ position: "relative", textAlign: "center", maxWidth: 680 }}>
       <p
-        className="uppercase tracking-[0.25em] mb-6"
         style={{
-          fontSize: "clamp(0.65rem, 1.2vw, 0.8rem)",
-          color: "rgba(77,184,255,0.8)",
-          fontWeight: 500,
-          letterSpacing: "0.25em",
+          fontSize: "clamp(0.7rem,1.4vw,0.85rem)",
+          fontWeight: 600,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: "rgba(77,184,255,0.7)",
+          marginBottom: 18,
         }}
       >
         Дистанционный автономный комплекс
@@ -32,18 +41,18 @@ const HeroSection = () => (
 
       <h1
         style={{
-          fontSize: "clamp(2.4rem, 6vw, 4.2rem)",
+          fontSize: "clamp(2.4rem,6vw,4.4rem)",
           fontWeight: 800,
           letterSpacing: "-0.04em",
-          lineHeight: 1.08,
-          color: "#0a0f1e",
-          marginBottom: "1.5rem",
+          lineHeight: 1.05,
+          color: "#0a0a12",
+          marginBottom: 28,
         }}
       >
         АнтиСистема —{" "}
         <span
           style={{
-            background: "linear-gradient(135deg, #29a3e6, #4db8ff)",
+            background: "linear-gradient(135deg,#29a3e6,#4db8ff,#66ccff)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}
@@ -52,208 +61,198 @@ const HeroSection = () => (
         </span>
       </h1>
 
-      <div className="mx-auto mt-8 w-16 h-[2px] rounded-full" style={{ background: "linear-gradient(90deg, transparent, #29a3e6, transparent)" }} />
+      <div style={{ width: 48, height: 3, background: "linear-gradient(90deg,#29a3e6,#66ccff)", borderRadius: 2, margin: "0 auto" }} />
     </div>
   </section>
 );
 
 const funnelSections = [
   {
-    num: "01",
-    question: "Что это такое?",
+    num: "01", question: "Что это такое?",
     text: "АнтиСистема — это дистанционный автономный комплекс очищающий от всего негатива на всех уровнях, восстанавливающий сферы жизни и формирующий защиты состоящий из миллиарда процессов.",
-    detail: "/",
+    detail: "/details",
   },
   {
-    num: "02",
-    question: "Как это работает?",
-    text: "АнтиСистема работает как антивирус с программным кодом на уровне нашей реальности и её глубин. Это миллиарды процессов каждый из которых выполняет свою определенную задачу собираясь по крупицам и заставляя работать и приводить к глобальным результатам.",
-    detail: "/",
+    num: "02", question: "Как это работает?",
+    text: "АнтиСистема работает как антивирус с программным кодом на уровне нашей реальности и её глубин. Это миллиарды процессов каждый из которых выполняет свою определённую задачу собираясь по крупицам и приводя к глобальным результатам.",
+    detail: "/details",
   },
   {
-    num: "03",
-    question: "Что нужно делать?",
-    text: "Ничего. Никаких упражнений, практик или медитаций. Вся работа происходит полностью автономно. Все результаты идут сами собой, постепенно, но для общего понимания важно читать базу знаний.",
+    num: "03", question: "Что нужно делать?",
+    text: "Ничего. Никаких упражнений, практик или медитаций. Вся работа происходит полностью автономно. Все результаты идут сами собой, постепенно, но важно читать базу знаний.",
     detail: "/knowledge",
   },
   {
-    num: "04",
-    question: "Что входит в комплекс?",
-    list: [
-      "Процесс очищения и удаления",
-      "Восстановление и перестройка тела",
-      "Автономные защиты",
-      "Развитие энергетических способностей — управление своей судьбой",
-    ],
+    num: "04", question: "Что входит в комплекс?",
+    list: ["Процесс очищения и удаления", "Восстановление и перестройка тела", "Автономные защиты", "Развитие энергетических способностей — управление своей судьбой"],
     detail: "/details",
   },
   {
-    num: "05",
-    question: "Что даёт?",
-    text: "Возвращает человека в естественное состояние 100% здоровья, здоровые отношения, финансовый успех и полный контроль над своей жизнью и глубинное понимание своей сути.",
+    num: "05", question: "Что даёт?",
+    text: "Возвращает человека в естественное состояние 100% здоровья, здоровые отношения, финансовый успех и полный контроль над своей жизнью.",
     detail: "/details",
   },
   {
-    num: "06",
-    question: "Как запустить?",
+    num: "06", question: "Как запустить?",
     text: "Вас видно. Вы излучаете индивидуальную энергетическую частоту как ВайФай. Достаточно вашего намерения — и мы запустим процесс моментально.",
     detail: "/details",
   },
   {
-    num: "07",
-    question: "Как начать?",
+    num: "07", question: "Как начать?",
     text: "Пиши «готов» и пробуй 31 день новой жизни.",
     cta: true,
-    detail: "/",
   },
 ];
 
-const ReadMore = ({ href }: { href: string }) => (
-  <a
-    href={href}
-    className="inline-flex items-center mt-5 text-sm font-medium transition-all duration-300"
-    style={{ color: "rgba(41,163,230,0.6)", gap: 6 }}
-    onMouseEnter={e => {
-      (e.currentTarget as HTMLAnchorElement).style.color = "#29a3e6";
-      (e.currentTarget as HTMLAnchorElement).style.gap = "10px";
-    }}
-    onMouseLeave={e => {
-      (e.currentTarget as HTMLAnchorElement).style.color = "rgba(41,163,230,0.6)";
-      (e.currentTarget as HTMLAnchorElement).style.gap = "6px";
-    }}
-  >
-    Читать подробнее
-    <span>→</span>
-  </a>
-);
+const Index = () => (
+  <div style={{ position: "relative", zIndex: 1 }}>
+    <HeroSection />
 
-const Index = () => {
-  return (
-    <main className="relative z-10">
-      <HeroSection />
-
-      <section className="max-w-3xl mx-auto px-6 pb-32 space-y-8">
-        {funnelSections.map((section, i) => (
-          <FadeInSection key={i} delay={i * 0.08}>
-            <div
-              className="relative rounded-2xl transition-all duration-300 cursor-default"
+    <section style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 140px" }}>
+      {funnelSections.map((s, i) => (
+        <FadeInSection key={i}>
+          <div
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              background: "rgba(255,255,255,0.55)",
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
+              border: "1px solid rgba(77,184,255,0.1)",
+              borderRadius: 18,
+              padding: "48px 44px 40px",
+              marginBottom: 28,
+              boxShadow: "0 2px 20px rgba(0,80,180,0.04),0 1px 0 rgba(255,255,255,0.85) inset",
+              transition: "box-shadow .3s,border-color .3s",
+            }}
+          >
+            {/* Giant background number */}
+            <span
               style={{
-                padding: "clamp(28px, 4vw, 44px)",
-                background: "rgba(255,255,255,0.55)",
-                backdropFilter: "blur(18px)",
-                WebkitBackdropFilter: "blur(18px)",
-                border: "1px solid rgba(77,184,255,0.1)",
-                boxShadow: "0 2px 20px rgba(0,80,180,0.04), 0 1px 0 rgba(255,255,255,0.85) inset",
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLDivElement;
-                el.style.boxShadow = "0 8px 40px rgba(77,184,255,0.1), 0 1px 0 rgba(255,255,255,0.85) inset";
-                el.style.borderColor = "rgba(77,184,255,0.25)";
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLDivElement;
-                el.style.boxShadow = "0 2px 20px rgba(0,80,180,0.04), 0 1px 0 rgba(255,255,255,0.85) inset";
-                el.style.borderColor = "rgba(77,184,255,0.1)";
+                position: "absolute",
+                top: -18,
+                right: 20,
+                fontSize: "8rem",
+                fontWeight: 900,
+                lineHeight: 1,
+                color: "rgba(77,184,255,0.045)",
+                pointerEvents: "none",
+                userSelect: "none",
               }}
             >
-              {/* Accent bar left */}
-              <div
-                className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full"
-                style={{ background: "linear-gradient(180deg, #29a3e6, #4db8ff, transparent)" }}
-              />
+              {s.num}
+            </span>
 
-              {/* Number */}
-              <span
-                className="block mb-2 font-mono text-xs"
-                style={{ color: "rgba(41,163,230,0.35)", fontWeight: 600 }}
-              >
-                {section.num}
-              </span>
+            {/* Small label */}
+            <span
+              style={{
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                color: "rgba(41,163,230,0.55)",
+                textTransform: "uppercase",
+              }}
+            >
+              {s.num}
+            </span>
 
-              {/* Question */}
-              <h2
-                className="mb-4"
+            {/* Question */}
+            <h2
+              style={{
+                fontSize: "clamp(1.3rem,2.5vw,1.7rem)",
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
+                color: "#0a0a12",
+                margin: "10px 0 14px",
+                lineHeight: 1.2,
+              }}
+            >
+              {s.question}
+            </h2>
+
+            {s.text && (
+              <p
                 style={{
-                  fontSize: "clamp(1.25rem, 2.5vw, 1.6rem)",
-                  fontWeight: 700,
-                  letterSpacing: "-0.02em",
-                  color: "#0a0f1e",
-                  lineHeight: 1.2,
+                  fontSize: "clamp(0.95rem,1.4vw,1.08rem)",
+                  lineHeight: 1.85,
+                  color: "rgba(10,10,18,0.62)",
+                  marginBottom: 18,
                 }}
               >
-                {section.question}
-              </h2>
+                {s.text}
+              </p>
+            )}
 
-              {/* Text */}
-              {section.text && (
-                <p
-                  style={{
-                    fontSize: "clamp(0.95rem, 1.4vw, 1.08rem)",
-                    lineHeight: 1.85,
-                    color: "rgba(10,15,30,0.62)",
-                  }}
-                >
-                  {section.text}
-                </p>
-              )}
-
-              {/* List */}
-              {section.list && (
-                <ul className="space-y-3 mt-2">
-                  {section.list.map((item, j) => (
-                    <li
-                      key={j}
-                      className="flex items-start gap-3"
-                      style={{
-                        fontSize: "clamp(0.95rem, 1.4vw, 1.08rem)",
-                        lineHeight: 1.7,
-                        color: "rgba(10,15,30,0.62)",
-                      }}
-                    >
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#29a3e6" }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* Read more */}
-              {!section.cta && <ReadMore href={section.detail} />}
-
-              {/* CTA */}
-              {section.cta && (
-                <div className="mt-8 flex justify-center">
-                  <a
-                    href="https://t.me/antisistema_bot"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-semibold text-base transition-all duration-300"
+            {s.list && (
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 18px" }}>
+                {s.list.map((item, j) => (
+                  <li
+                    key={j}
                     style={{
-                      background: "linear-gradient(135deg, #29a3e6, #4db8ff)",
-                      boxShadow: "0 0 32px rgba(77,184,255,0.22), 0 6px 20px rgba(0,80,180,0.13)",
-                      letterSpacing: "-0.01em",
-                    }}
-                    onMouseEnter={e => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.transform = "scale(1.04)";
-                      el.style.boxShadow = "0 0 52px rgba(77,184,255,0.4), 0 10px 30px rgba(0,80,180,0.2)";
-                    }}
-                    onMouseLeave={e => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.transform = "scale(1)";
-                      el.style.boxShadow = "0 0 32px rgba(77,184,255,0.22), 0 6px 20px rgba(0,80,180,0.13)";
+                      display: "flex",
+                      alignItems: "baseline",
+                      gap: 10,
+                      fontSize: "clamp(0.95rem,1.4vw,1.08rem)",
+                      lineHeight: 1.85,
+                      color: "rgba(10,10,18,0.62)",
                     }}
                   >
-                    Написать в Telegram →
-                  </a>
-                </div>
+                    <span style={{ color: "#29a3e6", fontWeight: 700 }}>·</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div style={{ marginTop: 6 }}>
+              {!s.cta && (
+                <a
+                  href={s.detail}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 5,
+                    fontSize: "0.85rem",
+                    fontWeight: 600,
+                    color: "rgba(41,163,230,0.6)",
+                    textDecoration: "none",
+                    transition: "color .2s,gap .25s",
+                  }}
+                  onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.color="#29a3e6"; el.style.gap="10px"; }}
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.color="rgba(41,163,230,0.6)"; el.style.gap="5px"; }}
+                >
+                  Читать подробнее →
+                </a>
+              )}
+              {s.cta && (
+                <a
+                  href="https://t.me/antisistemacom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-block",
+                    padding: "16px 38px",
+                    background: "linear-gradient(135deg,#29a3e6,#4db8ff)",
+                    color: "#fff",
+                    fontWeight: 700,
+                    fontSize: "1.05rem",
+                    borderRadius: 14,
+                    textDecoration: "none",
+                    boxShadow: "0 0 32px rgba(77,184,255,.22),0 6px 20px rgba(0,80,180,.13)",
+                    transition: "transform .25s,box-shadow .3s",
+                  }}
+                  onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.transform="scale(1.05)"; el.style.boxShadow="0 0 52px rgba(77,184,255,.4),0 10px 30px rgba(0,80,180,.2)"; }}
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.transform="scale(1)"; el.style.boxShadow="0 0 32px rgba(77,184,255,.22),0 6px 20px rgba(0,80,180,.13)"; }}
+                >
+                  Написать в Telegram →
+                </a>
               )}
             </div>
-          </FadeInSection>
-        ))}
-      </section>
-    </main>
-  );
-};
+          </div>
+        </FadeInSection>
+      ))}
+    </section>
+  </div>
+);
 
 export default Index;
