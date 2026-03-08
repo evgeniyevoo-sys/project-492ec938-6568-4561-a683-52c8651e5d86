@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,53 +6,42 @@
 
 @layer base {
   :root {
-    --background: 214 65% 6%;
-    --foreground: 0 0% 95%;
+    --background: 220 60% 4%;
+    --foreground: 200 30% 95%;
 
-    --card: 214 50% 8%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 50% 6%;
+    --card-foreground: 200 30% 95%;
 
-    --popover: 214 50% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 50% 6%;
+    --popover-foreground: 200 30% 95%;
 
     --primary: 193 100% 50%;
-    --primary-foreground: 214 65% 6%;
+    --primary-foreground: 220 60% 4%;
 
-    --secondary: 214 30% 14%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 220 30% 10%;
+    --secondary-foreground: 200 20% 85%;
 
-    --muted: 214 30% 14%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 220 30% 10%;
+    --muted-foreground: 200 15% 50%;
 
     --accent: 193 100% 50%;
-    --accent-foreground: 214 65% 6%;
+    --accent-foreground: 220 60% 4%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 193 100% 50%;
-    --input: 214 30% 18%;
+    --border: 220 30% 12%;
+    --input: 220 30% 12%;
     --ring: 193 100% 50%;
 
-    --radius: 0.75rem;
-
-    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-
-    --sidebar-background: 214 50% 8%;
-    --sidebar-foreground: 0 0% 85%;
-    --sidebar-primary: 193 100% 50%;
-    --sidebar-primary-foreground: 214 65% 6%;
-    --sidebar-accent: 214 30% 14%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 214 30% 18%;
-    --sidebar-ring: 193 100% 50%;
+    --radius: 1rem;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
 
   html {
@@ -61,45 +50,79 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-body);
+    font-family: 'Sora', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: radial-gradient(ellipse at 20% 0%, #060f1e 0%, #02070f 60%, #000508 100%);
+    min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+    font-family: 'Sora', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #02070f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 212, 255, 0.2);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 212, 255, 0.4);
   }
 }
 
 @layer components {
-  .section-container {
-    @apply max-w-3xl mx-auto px-6 py-20 md:py-28;
-  }
-
   .section-title {
-    @apply text-3xl md:text-5xl font-extrabold tracking-tight mb-6 leading-[1.1];
-    color: hsl(193 100% 50%);
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: #00d4ff;
+    line-height: 1.15;
   }
 
   .section-text {
-    @apply text-lg md:text-xl leading-relaxed;
-    color: hsl(0 0% 80%);
-    line-height: 1.75;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.8;
+    color: rgba(200, 230, 255, 0.72);
   }
 
   .page-container {
-    @apply max-w-4xl mx-auto px-6 py-28 md:py-36;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(80px, 10vw, 140px) 24px;
   }
 
   .page-title {
-    @apply text-4xl md:text-6xl font-extrabold tracking-tight mb-14 leading-[1.05];
-    color: hsl(193 100% 50%);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    margin-bottom: 3rem;
+    color: #00d4ff;
+    line-height: 1.06;
   }
 
   .funnel-card {
-    border: 1px solid rgba(0, 212, 255, 0.2);
-    background: rgba(255, 255, 255, 0.03);
+    position: relative;
+    padding: clamp(28px, 4vw, 48px);
     border-radius: 16px;
-    padding: 40px;
+    background: rgba(0, 212, 255, 0.02);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .funnel-card:hover {
+    border-color: rgba(0, 212, 255, 0.25);
+    background: rgba(0, 212, 255, 0.04);
+  }
+
+  nav a:hover {
+    color: #00d4ff !important;
+    text-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
   }
 }
