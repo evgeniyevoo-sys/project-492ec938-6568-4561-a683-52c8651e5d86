@@ -2,16 +2,17 @@ import FadeInSection from "@/components/FadeInSection";
 
 const HeroSection = () => (
   <section className="min-h-screen flex items-center justify-center px-6 relative">
-    <FadeInSection>
-      <div className="relative">
-        {/* Apple-style rounded frame */}
-        <div className="w-[340px] h-[340px] md:w-[480px] md:h-[480px] rounded-[3rem] md:rounded-[4rem] border border-border/60 bg-background/60 backdrop-blur-2xl flex items-center justify-center p-10 md:p-16 shadow-[0_0_80px_rgba(0,0,0,0.04)]">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground text-center leading-tight">
-            АнтиСистема — новый способ жить
-          </h1>
-        </div>
+    <div className="hero-float">
+      <div className="w-[340px] h-[340px] md:w-[500px] md:h-[500px] rounded-[32px] bg-background flex items-center justify-center p-10 md:p-16"
+        style={{
+          boxShadow: "0 8px 60px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)",
+        }}
+      >
+        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground text-center leading-[1.1]">
+          АнтиСистема — новый способ жить
+        </h1>
       </div>
-    </FadeInSection>
+    </div>
   </section>
 );
 
@@ -58,18 +59,27 @@ const Index = () => {
       <HeroSection />
 
       {funnelSections.map((section, i) => (
-        <section key={i} className="border-t border-border/40">
+        <section key={i} className="border-t border-border/30">
           <div className="section-container">
-            <FadeInSection>
-              <p className="text-sm font-medium text-muted-foreground mb-3 tracking-wide uppercase">
+            <FadeInSection delay={0}>
+              <p className="text-sm font-medium text-muted-foreground mb-4 tracking-widest uppercase">
                 {String(i + 1).padStart(2, "0")}
               </p>
+            </FadeInSection>
+
+            <FadeInSection delay={100}>
               <h2 className="section-title">{section.question}</h2>
+            </FadeInSection>
 
-              {section.text && <p className="section-text">{section.text}</p>}
+            {section.text && (
+              <FadeInSection delay={200}>
+                <p className="section-text">{section.text}</p>
+              </FadeInSection>
+            )}
 
-              {section.list && (
-                <ul className="space-y-3 mt-2">
+            {section.list && (
+              <FadeInSection delay={200}>
+                <ul className="space-y-4 mt-3">
                   {section.list.map((item, j) => (
                     <li key={j} className="section-text flex items-start gap-3">
                       <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-3 shrink-0" />
@@ -77,19 +87,25 @@ const Index = () => {
                     </li>
                   ))}
                 </ul>
-              )}
+              </FadeInSection>
+            )}
 
-              {section.cta && (
+            {section.cta && (
+              <FadeInSection delay={300}>
                 <a
                   href="https://t.me/evgeniyevo"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block mt-10 px-10 py-4 bg-primary text-primary-foreground rounded-full text-lg font-semibold tracking-tight hover:opacity-90 transition-opacity"
+                  className="inline-block mt-12 px-12 py-5 rounded-[50px] text-lg font-semibold tracking-tight transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)]"
+                  style={{
+                    backgroundColor: "hsl(0 0% 7%)",
+                    color: "hsl(0 0% 100%)",
+                  }}
                 >
                   Написать в Telegram
                 </a>
-              )}
-            </FadeInSection>
+              </FadeInSection>
+            )}
           </div>
         </section>
       ))}

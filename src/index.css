@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,32 +7,32 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 8%;
+    --foreground: 0 0% 13%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 8%;
+    --card-foreground: 0 0% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 8%;
+    --popover-foreground: 0 0% 13%;
 
-    --primary: 0 0% 10%;
+    --primary: 0 0% 7%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 0 0% 97%;
+    --secondary-foreground: 0 0% 13%;
 
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 40%;
 
     --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 10%;
+    --accent-foreground: 0 0% 13%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
+    --border: 0 0% 92%;
     --input: 0 0% 90%;
-    --ring: 0 0% 10%;
+    --ring: 0 0% 7%;
 
     --radius: 0.75rem;
 
@@ -73,22 +73,34 @@
 
 @layer components {
   .section-container {
-    @apply max-w-4xl mx-auto px-6 py-24 md:py-32;
+    @apply max-w-3xl mx-auto px-6 py-28 md:py-36;
   }
 
   .section-title {
-    @apply text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-6;
+    @apply text-3xl md:text-5xl font-extrabold tracking-tight text-foreground mb-6 leading-[1.1];
   }
 
   .section-text {
-    @apply text-lg md:text-xl leading-relaxed text-muted-foreground;
+    @apply text-lg md:text-xl leading-relaxed;
+    color: hsl(0 0% 20%);
+    line-height: 1.75;
   }
 
   .page-container {
-    @apply max-w-5xl mx-auto px-6 py-24 md:py-32;
+    @apply max-w-4xl mx-auto px-6 py-28 md:py-36;
   }
 
   .page-title {
-    @apply text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-12;
+    @apply text-4xl md:text-6xl font-extrabold tracking-tight text-foreground mb-14 leading-[1.05];
   }
+}
+
+/* Hero card floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.hero-float {
+  animation: float 6s ease-in-out infinite;
 }
