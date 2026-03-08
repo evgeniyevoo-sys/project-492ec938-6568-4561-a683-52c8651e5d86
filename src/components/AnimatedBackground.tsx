@@ -1,6 +1,14 @@
 import { useRef, useMemo } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import * as THREE from "three";
+
+extend({ Line_: THREE.Line });
+
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    line_: any;
+  }
+}
 
 const LINE_COUNT = 8;
 const POINTS_PER_LINE = 120;
