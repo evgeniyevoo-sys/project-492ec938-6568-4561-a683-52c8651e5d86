@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,33 +6,34 @@
 
 @layer base {
   :root {
-    --background: 220 60% 4%;
-    --foreground: 200 30% 95%;
+    /* Warm cream palette */
+    --background: 36 60% 97%;
+    --foreground: 24 60% 8%;
 
-    --card: 220 50% 6%;
-    --card-foreground: 200 30% 95%;
+    --card: 36 40% 95%;
+    --card-foreground: 24 60% 8%;
 
-    --popover: 220 50% 6%;
-    --popover-foreground: 200 30% 95%;
+    --popover: 36 40% 95%;
+    --popover-foreground: 24 60% 8%;
 
-    --primary: 193 100% 50%;
-    --primary-foreground: 220 60% 4%;
+    --primary: 24 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 30% 10%;
-    --secondary-foreground: 200 20% 85%;
+    --secondary: 36 30% 90%;
+    --secondary-foreground: 24 40% 20%;
 
-    --muted: 220 30% 10%;
-    --muted-foreground: 200 15% 50%;
+    --muted: 36 30% 90%;
+    --muted-foreground: 24 20% 45%;
 
-    --accent: 193 100% 50%;
-    --accent-foreground: 220 60% 4%;
+    --accent: 24 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 30% 12%;
-    --input: 220 30% 12%;
-    --ring: 193 100% 50%;
+    --border: 30 30% 88%;
+    --input: 30 30% 88%;
+    --ring: 24 100% 50%;
 
     --radius: 1rem;
   }
@@ -49,80 +50,75 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Sora', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: radial-gradient(ellipse at 20% 0%, #060f1e 0%, #02070f 60%, #000508 100%);
+    /* Warm parchment — not clinical white */
+    background: #fdf6ee;
+    background-image:
+      radial-gradient(ellipse at 80% 0%, rgba(255,160,60,0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 10% 90%, rgba(255,120,0,0.05) 0%, transparent 50%);
     min-height: 100vh;
+    color: #1a0800;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Sora', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'DM Sans', system-ui, sans-serif;
   }
 
-  ::-webkit-scrollbar {
-    width: 4px;
+  ::selection {
+    background: rgba(255, 106, 0, 0.18);
+    color: #1a0800;
   }
-  ::-webkit-scrollbar-track {
-    background: #02070f;
-  }
+
+  /* Refined scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #fdf6ee; }
   ::-webkit-scrollbar-thumb {
-    background: rgba(0, 212, 255, 0.2);
+    background: rgba(255, 106, 0, 0.25);
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 212, 255, 0.4);
+    background: rgba(255, 106, 0, 0.45);
   }
 }
 
 @layer components {
   .section-title {
     font-size: clamp(1.4rem, 2.5vw, 2rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 800;
+    letter-spacing: -0.025em;
     margin-bottom: 1rem;
-    color: #00d4ff;
-    line-height: 1.15;
+    color: #1a0800;
+    line-height: 1.12;
   }
 
   .section-text {
-    font-size: clamp(1rem, 1.5vw, 1.15rem);
-    line-height: 1.8;
-    color: rgba(200, 230, 255, 0.72);
+    font-size: clamp(1rem, 1.5vw, 1.18rem);
+    line-height: 1.85;
+    color: rgba(60, 30, 0, 0.72);
   }
 
   .page-container {
-    max-width: 900px;
+    max-width: 860px;
     margin: 0 auto;
     padding: clamp(80px, 10vw, 140px) 24px;
   }
 
   .page-title {
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-size: clamp(2.2rem, 5vw, 4rem);
     font-weight: 800;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.04em;
     margin-bottom: 3rem;
-    color: #00d4ff;
-    line-height: 1.06;
+    color: #1a0800;
+    line-height: 1.05;
   }
 
-  .funnel-card {
-    position: relative;
-    padding: clamp(28px, 4vw, 48px);
-    border-radius: 16px;
-    background: rgba(0, 212, 255, 0.02);
-    border: 1px solid rgba(0, 212, 255, 0.1);
-    transition: border-color 0.3s ease, background 0.3s ease;
+  /* Nav hover glow */
+  nav a {
+    transition: color 0.2s ease;
   }
-
-  .funnel-card:hover {
-    border-color: rgba(0, 212, 255, 0.25);
-    background: rgba(0, 212, 255, 0.04);
-  }
-
   nav a:hover {
-    color: #00d4ff !important;
-    text-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+    color: #ff6a00 !important;
   }
 }
