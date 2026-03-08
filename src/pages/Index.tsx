@@ -2,13 +2,12 @@ import FadeInSection from "@/components/FadeInSection";
 
 const HeroSection = () => (
   <section className="relative flex items-center justify-center min-h-[92vh] px-6">
-    {/* Warm glow behind card */}
     <div
       className="absolute rounded-full blur-[120px] opacity-30"
       style={{
         width: 420,
         height: 420,
-        background: "radial-gradient(circle, #ff6a00 0%, #ff8c00 40%, transparent 70%)",
+        background: "radial-gradient(circle, #29a3e6 0%, #4db8ff 40%, transparent 70%)",
         top: "18%",
         left: "50%",
         transform: "translateX(-50%)",
@@ -23,7 +22,7 @@ const HeroSection = () => (
         className="uppercase tracking-[0.25em] mb-6"
         style={{
           fontSize: "clamp(0.65rem, 1.2vw, 0.8rem)",
-          color: "rgba(255,138,0,0.8)",
+          color: "rgba(77,184,255,0.8)",
           fontWeight: 500,
           letterSpacing: "0.25em",
         }}
@@ -37,14 +36,14 @@ const HeroSection = () => (
           fontWeight: 800,
           letterSpacing: "-0.04em",
           lineHeight: 1.08,
-          color: "#1a1a1a",
+          color: "#0a0f1e",
           marginBottom: "1.5rem",
         }}
       >
         АнтиСистема —{" "}
         <span
           style={{
-            background: "linear-gradient(135deg, #ff6a00, #ff8c00)",
+            background: "linear-gradient(135deg, #29a3e6, #4db8ff)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}
@@ -53,7 +52,7 @@ const HeroSection = () => (
         </span>
       </h1>
 
-      <div className="mx-auto mt-8 w-16 h-[2px] rounded-full" style={{ background: "linear-gradient(90deg, transparent, #ff6a00, transparent)" }} />
+      <div className="mx-auto mt-8 w-16 h-[2px] rounded-full" style={{ background: "linear-gradient(90deg, transparent, #29a3e6, transparent)" }} />
     </div>
   </section>
 );
@@ -113,13 +112,13 @@ const ReadMore = ({ href }: { href: string }) => (
   <a
     href={href}
     className="inline-flex items-center mt-5 text-sm font-medium transition-all duration-300"
-    style={{ color: "rgba(180,80,0,0.7)", gap: 6 }}
+    style={{ color: "rgba(41,163,230,0.6)", gap: 6 }}
     onMouseEnter={e => {
-      (e.currentTarget as HTMLAnchorElement).style.color = "#ff6a00";
+      (e.currentTarget as HTMLAnchorElement).style.color = "#29a3e6";
       (e.currentTarget as HTMLAnchorElement).style.gap = "10px";
     }}
     onMouseLeave={e => {
-      (e.currentTarget as HTMLAnchorElement).style.color = "rgba(180,80,0,0.7)";
+      (e.currentTarget as HTMLAnchorElement).style.color = "rgba(41,163,230,0.6)";
       (e.currentTarget as HTMLAnchorElement).style.gap = "6px";
     }}
   >
@@ -140,31 +139,33 @@ const Index = () => {
               className="relative rounded-2xl transition-all duration-300 cursor-default"
               style={{
                 padding: "clamp(28px, 4vw, 44px)",
-                background: "#fffcf8",
-                border: "1px solid rgba(200,100,0,0.12)",
-                boxShadow: "0 2px 24px rgba(180,80,0,0.06), 0 1px 0 rgba(255,255,255,0.9) inset",
+                background: "rgba(255,255,255,0.55)",
+                backdropFilter: "blur(18px)",
+                WebkitBackdropFilter: "blur(18px)",
+                border: "1px solid rgba(77,184,255,0.1)",
+                boxShadow: "0 2px 20px rgba(0,80,180,0.04), 0 1px 0 rgba(255,255,255,0.85) inset",
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLDivElement;
-                el.style.boxShadow = "0 8px 40px rgba(255,100,0,0.1), 0 1px 0 rgba(255,255,255,0.9) inset";
-                el.style.borderColor = "rgba(255,100,0,0.25)";
+                el.style.boxShadow = "0 8px 40px rgba(77,184,255,0.1), 0 1px 0 rgba(255,255,255,0.85) inset";
+                el.style.borderColor = "rgba(77,184,255,0.25)";
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLDivElement;
-                el.style.boxShadow = "0 2px 24px rgba(180,80,0,0.06), 0 1px 0 rgba(255,255,255,0.9) inset";
-                el.style.borderColor = "rgba(200,100,0,0.12)";
+                el.style.boxShadow = "0 2px 20px rgba(0,80,180,0.04), 0 1px 0 rgba(255,255,255,0.85) inset";
+                el.style.borderColor = "rgba(77,184,255,0.1)";
               }}
             >
               {/* Accent bar left */}
               <div
                 className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full"
-                style={{ background: "linear-gradient(180deg, #ff6a00, #ff8c00, transparent)" }}
+                style={{ background: "linear-gradient(180deg, #29a3e6, #4db8ff, transparent)" }}
               />
 
               {/* Number */}
               <span
                 className="block mb-2 font-mono text-xs"
-                style={{ color: "rgba(180,80,0,0.35)", fontWeight: 600 }}
+                style={{ color: "rgba(41,163,230,0.35)", fontWeight: 600 }}
               >
                 {section.num}
               </span>
@@ -176,7 +177,7 @@ const Index = () => {
                   fontSize: "clamp(1.25rem, 2.5vw, 1.6rem)",
                   fontWeight: 700,
                   letterSpacing: "-0.02em",
-                  color: "#1a1a1a",
+                  color: "#0a0f1e",
                   lineHeight: 1.2,
                 }}
               >
@@ -189,7 +190,7 @@ const Index = () => {
                   style={{
                     fontSize: "clamp(0.95rem, 1.4vw, 1.08rem)",
                     lineHeight: 1.85,
-                    color: "rgba(40,30,20,0.7)",
+                    color: "rgba(10,15,30,0.62)",
                   }}
                 >
                   {section.text}
@@ -206,10 +207,10 @@ const Index = () => {
                       style={{
                         fontSize: "clamp(0.95rem, 1.4vw, 1.08rem)",
                         lineHeight: 1.7,
-                        color: "rgba(40,30,20,0.7)",
+                        color: "rgba(10,15,30,0.62)",
                       }}
                     >
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#ff6a00" }} />
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#29a3e6" }} />
                       {item}
                     </li>
                   ))}
@@ -228,19 +229,19 @@ const Index = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-semibold text-base transition-all duration-300"
                     style={{
-                      background: "linear-gradient(135deg, #ff6a00, #ff8c00)",
-                      boxShadow: "0 0 40px rgba(255,100,0,0.25), 0 6px 24px rgba(180,60,0,0.2)",
+                      background: "linear-gradient(135deg, #29a3e6, #4db8ff)",
+                      boxShadow: "0 0 32px rgba(77,184,255,0.22), 0 6px 20px rgba(0,80,180,0.13)",
                       letterSpacing: "-0.01em",
                     }}
                     onMouseEnter={e => {
                       const el = e.currentTarget as HTMLAnchorElement;
                       el.style.transform = "scale(1.04)";
-                      el.style.boxShadow = "0 0 60px rgba(255,100,0,0.4), 0 10px 32px rgba(180,60,0,0.25)";
+                      el.style.boxShadow = "0 0 52px rgba(77,184,255,0.4), 0 10px 30px rgba(0,80,180,0.2)";
                     }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLAnchorElement;
                       el.style.transform = "scale(1)";
-                      el.style.boxShadow = "0 0 40px rgba(255,100,0,0.25), 0 6px 24px rgba(180,60,0,0.2)";
+                      el.style.boxShadow = "0 0 32px rgba(77,184,255,0.22), 0 6px 20px rgba(0,80,180,0.13)";
                     }}
                   >
                     Написать в Telegram →
