@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo, useCallback } from "react";
+import { useRef, useMemo } from "react";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -10,51 +10,50 @@ declare module "@react-three/fiber" {
   }
 }
 
-const LINE_COUNT = 5;
-const POINTS_PER_LINE = 100;
+const LINE_COUNT = 8;
+const POINTS_PER_LINE = 120;
+const COLORS = ["#00d4ff", "#0099cc", "#00ffcc", "#0077ff", "#00eeff"];
 
 interface LineState {
   offset: number;
   speed: number;
   amplitude: number;
   frequency: number;
-  opacity: number;
+  maxOpacity: number;
   yBase: number;
   phase: number;
-  color: string;
-  life: number;      // 0-1, current life
-  maxLife: number;    // total life duration in seconds
-  born: number;       // time born
+  colorIdx: number;
+  width: number;
+  born: number;
+  maxLife: number;
 }
-
-const COLORS = ["#00d4ff", "#0099cc", "#00ffcc", "#0066ff"];
 
 function createLine(time: number): LineState {
   return {
     offset: Math.random() * Math.PI * 2,
-    speed: 0.01 + Math.random() * 0.02,
-    amplitude: 0.6 + Math.random() * 1.4,
-    frequency: 0.2 + Math.random() * 0.4,
-    opacity: 0.2 + Math.random() * 0.3,
-    yBase: Math.random() * 2 - 1,
+    speed: 0.003 + Math.random() * 0.005,
+    amplitude: 0.3 + Math.random() * 0.8,
+    frequency: 0.15 + Math.random() * 0.25,
+    maxOpacity: 0.08 + Math.random() * 0.18,
+    yBase: (Math.random() - 0.5) * 1.8,
     phase: Math.random() * Math.PI * 2,
-    color: COLORS[Math.floor(Math.random() * COLORS.length)],
-    life: 0,
-    maxLife: 12 + Math.random() * 18,
+    colorIdx: Math.floor(Math.random() * COLORS.length),
+    width: 0.5 + Math.random() * 2,
     born: time,
+    maxLife: 20 + Math.random() * 25,
   };
 }
 
 function FlowLines() {
-  const groupRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
   const linesRef = useRef<LineState[]>([]);
   const materialsRef = useRef<THREE.LineBasicMaterial[]>([]);
+  const geometriesRef = useRef<THREE.BufferGeometry[]>([]);
 
-  const geometries = useMemo(() => {
+  const { geometries, materials } = useMemo(() => {
     const geos: THREE.BufferGeometry[] = [];
     const mats: THREE.LineBasicMaterial[] = [];
-    const initialLines: LineState[] = [];
+    const lines: LineState[] = [];
 
     for (let i = 0; i < LINE_COUNT; i++) {
       const geo = new THREE.BufferGeometry();
@@ -62,74 +61,70 @@ function FlowLines() {
       geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
       geos.push(geo);
 
-      const line = createLine(i * -5); // stagger birth
-      initialLines.push(line);
+      const line = createLine(-(i * 7));
+      lines.push(line);
 
       const mat = new THREE.LineBasicMaterial({
-        color: line.color,
+        color: new THREE.Color(COLORS[line.colorIdx]),
         transparent: true,
         opacity: 0,
+        linewidth: 1,
       });
       mats.push(mat);
     }
 
-    linesRef.current = initialLines;
+    linesRef.current = lines;
     materialsRef.current = mats;
-    return geos;
+    geometriesRef.current = geos;
+    return { geometries: geos, materials: mats };
   }, []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     const w = viewport.width;
     const h = viewport.height;
-    const lines = linesRef.current;
-    const mats = materialsRef.current;
 
-    lines.forEach((line, i) => {
+    linesRef.current.forEach((line, i) => {
       const age = t - line.born;
-      const lifeFrac = age / line.maxLife;
+      const lifeFrac = Math.min(age / line.maxLife, 1);
 
-      // Fade in for first 20%, fade out for last 20%
-      let alpha = line.opacity;
-      if (lifeFrac < 0.2) {
-        alpha *= lifeFrac / 0.2;
-      } else if (lifeFrac > 0.8) {
-        alpha *= (1 - lifeFrac) / 0.2;
+      let alpha = line.maxOpacity;
+      if (lifeFrac < 0.3) {
+        alpha *= lifeFrac / 0.3;
+      } else if (lifeFrac > 0.7) {
+        alpha *= (1 - lifeFrac) / 0.3;
       }
 
-      // Regenerate if dead
       if (lifeFrac >= 1) {
         const newLine = createLine(t);
-        lines[i] = newLine;
-        mats[i].color.set(newLine.color);
+        linesRef.current[i] = newLine;
+        materialsRef.current[i].color.set(COLORS[newLine.colorIdx]);
         return;
       }
 
-      mats[i].opacity = Math.max(0, alpha);
+      materialsRef.current[i].opacity = Math.max(0, alpha);
 
-      const positions = geometries[i].attributes.position.array as Float32Array;
+      const positions = geometriesRef.current[i].attributes.position.array as Float32Array;
       for (let j = 0; j < POINTS_PER_LINE; j++) {
         const frac = j / (POINTS_PER_LINE - 1);
-        const x = (frac - 0.5) * w * 1.4;
-        const baseY = line.yBase * h * 0.55;
+        const x = (frac - 0.5) * w * 1.5;
+        const baseY = line.yBase * h * 0.5;
         const y =
           baseY +
-          Math.sin(frac * line.frequency * 7 + t * line.speed + line.offset) *
-            line.amplitude * 0.5 +
-          Math.cos(frac * line.frequency * 3.5 + t * line.speed * 0.5 + line.phase) *
-            line.amplitude * 0.25;
+          Math.sin(frac * line.frequency * 6 + t * line.speed + line.offset) * line.amplitude * 0.6 +
+          Math.cos(frac * line.frequency * 2.5 + t * line.speed * 0.4 + line.phase) * line.amplitude * 0.2;
         positions[j * 3] = x;
         positions[j * 3 + 1] = y;
         positions[j * 3 + 2] = 0;
       }
-      geometries[i].attributes.position.needsUpdate = true;
+      geometriesRef.current[i].attributes.position.needsUpdate = true;
     });
   });
 
   return (
-    <group ref={groupRef}>
+    <group>
       {geometries.map((geo, i) => (
-        <line_ key={i} geometry={geo} material={materialsRef.current[i]} />
+        <line_ key={i} geometry={geo} material={materials[i]} />
       ))}
     </group>
   );
