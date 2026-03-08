@@ -17,13 +17,18 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-2xl border-b border-border/40">
+    <header
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl"
+      style={{
+        background: "rgba(5, 13, 26, 0.85)",
+        borderBottom: "1px solid rgba(0, 212, 255, 0.1)",
+      }}
+    >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-12">
         <Link to="/" className="text-base font-bold tracking-tight text-foreground">
           АнтиСистема
         </Link>
 
-        {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-7">
           {navItems.map((item) => (
             <Link
@@ -40,7 +45,6 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
           className="lg:hidden text-foreground"
@@ -50,9 +54,14 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile nav */}
       {open && (
-        <div className="lg:hidden bg-background/95 backdrop-blur-2xl border-b border-border/40">
+        <div
+          className="lg:hidden backdrop-blur-2xl"
+          style={{
+            background: "rgba(5, 13, 26, 0.95)",
+            borderBottom: "1px solid rgba(0, 212, 255, 0.1)",
+          }}
+        >
           <nav className="flex flex-col px-6 py-4 gap-3">
             {navItems.map((item) => (
               <Link

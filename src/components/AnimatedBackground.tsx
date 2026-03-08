@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect, useMemo, useCallback } from "react";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -10,65 +10,114 @@ declare module "@react-three/fiber" {
   }
 }
 
-const LINE_COUNT = 18;
-const POINTS_PER_LINE = 120;
+const LINE_COUNT = 5;
+const POINTS_PER_LINE = 100;
+
+interface LineState {
+  offset: number;
+  speed: number;
+  amplitude: number;
+  frequency: number;
+  opacity: number;
+  yBase: number;
+  phase: number;
+  color: string;
+  life: number;      // 0-1, current life
+  maxLife: number;    // total life duration in seconds
+  born: number;       // time born
+}
+
+const COLORS = ["#00d4ff", "#0099cc", "#00ffcc", "#0066ff"];
+
+function createLine(time: number): LineState {
+  return {
+    offset: Math.random() * Math.PI * 2,
+    speed: 0.01 + Math.random() * 0.02,
+    amplitude: 0.6 + Math.random() * 1.4,
+    frequency: 0.2 + Math.random() * 0.4,
+    opacity: 0.2 + Math.random() * 0.3,
+    yBase: Math.random() * 2 - 1,
+    phase: Math.random() * Math.PI * 2,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    life: 0,
+    maxLife: 12 + Math.random() * 18,
+    born: time,
+  };
+}
 
 function FlowLines() {
   const groupRef = useRef<THREE.Group>(null);
-  const scrollRef = useRef(0);
   const { viewport } = useThree();
-
-  useEffect(() => {
-    const onScroll = () => {
-      scrollRef.current = window.scrollY;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const lines = useMemo(() => {
-    return Array.from({ length: LINE_COUNT }, (_, i) => ({
-      offset: (i / LINE_COUNT) * Math.PI * 2,
-      speed: 0.08 + Math.random() * 0.12,
-      amplitude: 0.8 + Math.random() * 1.8,
-      frequency: 0.3 + Math.random() * 0.5,
-      thickness: 0.5 + Math.random() * 2.5,
-      opacity: 0.12 + Math.random() * 0.28,
-      yBase: (i / LINE_COUNT) * 2 - 1,
-      phase: Math.random() * Math.PI * 2,
-    }));
-  }, []);
+  const linesRef = useRef<LineState[]>([]);
+  const materialsRef = useRef<THREE.LineBasicMaterial[]>([]);
 
   const geometries = useMemo(() => {
-    return lines.map(() => {
-      const geometry = new THREE.BufferGeometry();
+    const geos: THREE.BufferGeometry[] = [];
+    const mats: THREE.LineBasicMaterial[] = [];
+    const initialLines: LineState[] = [];
+
+    for (let i = 0; i < LINE_COUNT; i++) {
+      const geo = new THREE.BufferGeometry();
       const positions = new Float32Array(POINTS_PER_LINE * 3);
-      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      return geometry;
-    });
-  }, [lines]);
+      geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      geos.push(geo);
+
+      const line = createLine(i * -5); // stagger birth
+      initialLines.push(line);
+
+      const mat = new THREE.LineBasicMaterial({
+        color: line.color,
+        transparent: true,
+        opacity: 0,
+      });
+      mats.push(mat);
+    }
+
+    linesRef.current = initialLines;
+    materialsRef.current = mats;
+    return geos;
+  }, []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    const scrollFactor = 1 + scrollRef.current * 0.0004;
     const w = viewport.width;
     const h = viewport.height;
+    const lines = linesRef.current;
+    const mats = materialsRef.current;
 
     lines.forEach((line, i) => {
+      const age = t - line.born;
+      const lifeFrac = age / line.maxLife;
+
+      // Fade in for first 20%, fade out for last 20%
+      let alpha = line.opacity;
+      if (lifeFrac < 0.2) {
+        alpha *= lifeFrac / 0.2;
+      } else if (lifeFrac > 0.8) {
+        alpha *= (1 - lifeFrac) / 0.2;
+      }
+
+      // Regenerate if dead
+      if (lifeFrac >= 1) {
+        const newLine = createLine(t);
+        lines[i] = newLine;
+        mats[i].color.set(newLine.color);
+        return;
+      }
+
+      mats[i].opacity = Math.max(0, alpha);
+
       const positions = geometries[i].attributes.position.array as Float32Array;
       for (let j = 0; j < POINTS_PER_LINE; j++) {
         const frac = j / (POINTS_PER_LINE - 1);
-        const x = (frac - 0.5) * w * 1.3;
-        const baseY = line.yBase * h * 0.6;
+        const x = (frac - 0.5) * w * 1.4;
+        const baseY = line.yBase * h * 0.55;
         const y =
           baseY +
-          Math.sin(frac * line.frequency * 8 + t * line.speed * scrollFactor + line.offset) *
-            line.amplitude *
-            scrollFactor *
-            0.5 +
-          Math.cos(frac * line.frequency * 4 + t * line.speed * 0.6 + line.phase) *
-            line.amplitude *
-            0.3;
+          Math.sin(frac * line.frequency * 7 + t * line.speed + line.offset) *
+            line.amplitude * 0.5 +
+          Math.cos(frac * line.frequency * 3.5 + t * line.speed * 0.5 + line.phase) *
+            line.amplitude * 0.25;
         positions[j * 3] = x;
         positions[j * 3 + 1] = y;
         positions[j * 3 + 2] = 0;
@@ -79,15 +128,8 @@ function FlowLines() {
 
   return (
     <group ref={groupRef}>
-      {lines.map((line, i) => (
-        <line_ key={i} geometry={geometries[i]}>
-          <lineBasicMaterial
-            color="#222222"
-            transparent
-            opacity={line.opacity}
-            linewidth={line.thickness}
-          />
-        </line_>
+      {geometries.map((geo, i) => (
+        <line_ key={i} geometry={geo} material={materialsRef.current[i]} />
       ))}
     </group>
   );
