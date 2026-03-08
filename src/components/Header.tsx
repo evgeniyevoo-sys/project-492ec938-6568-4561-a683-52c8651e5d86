@@ -17,19 +17,19 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
-        <Link to="/" className="text-lg font-bold tracking-tight text-foreground">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-2xl border-b border-border/40">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-12">
+        <Link to="/" className="text-base font-bold tracking-tight text-foreground">
           АнтиСистема
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-7">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`text-sm transition-colors ${
+              className={`text-[13px] transition-colors duration-200 ${
                 location.pathname === item.path
                   ? "text-foreground font-medium"
                   : "text-muted-foreground hover:text-foreground"
@@ -52,14 +52,14 @@ const Header = () => {
 
       {/* Mobile nav */}
       {open && (
-        <div className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border">
+        <div className="lg:hidden bg-background/95 backdrop-blur-2xl border-b border-border/40">
           <nav className="flex flex-col px-6 py-4 gap-3">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 onClick={() => setOpen(false)}
-                className={`text-sm py-1 transition-colors ${
+                className={`text-sm py-1 transition-colors duration-200 ${
                   location.pathname === item.path
                     ? "text-foreground font-medium"
                     : "text-muted-foreground"
