@@ -1,115 +1,102 @@
-import { useEffect, useRef } from "react";
+import { useRef, useEffect, useMemo } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
 
-interface FlowLine {
-  points: { x: number; y: number }[];
-  speed: number;
-  thickness: number;
-  opacity: number;
-  offset: number;
-  amplitude: number;
-  frequency: number;
+const LINE_COUNT = 18;
+const POINTS_PER_LINE = 120;
+
+function FlowLines() {
+  const groupRef = useRef<THREE.Group>(null);
+  const scrollRef = useRef(0);
+  const { viewport } = useThree();
+
+  useEffect(() => {
+    const onScroll = () => {
+      scrollRef.current = window.scrollY;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const lines = useMemo(() => {
+    return Array.from({ length: LINE_COUNT }, (_, i) => ({
+      offset: (i / LINE_COUNT) * Math.PI * 2,
+      speed: 0.08 + Math.random() * 0.12,
+      amplitude: 0.8 + Math.random() * 1.8,
+      frequency: 0.3 + Math.random() * 0.5,
+      thickness: 0.5 + Math.random() * 2.5,
+      opacity: 0.12 + Math.random() * 0.28,
+      yBase: (i / LINE_COUNT) * 2 - 1,
+      phase: Math.random() * Math.PI * 2,
+    }));
+  }, []);
+
+  const geometries = useMemo(() => {
+    return lines.map(() => {
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(POINTS_PER_LINE * 3);
+      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      return geometry;
+    });
+  }, [lines]);
+
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    const scrollFactor = 1 + scrollRef.current * 0.0004;
+    const w = viewport.width;
+    const h = viewport.height;
+
+    lines.forEach((line, i) => {
+      const positions = geometries[i].attributes.position.array as Float32Array;
+      for (let j = 0; j < POINTS_PER_LINE; j++) {
+        const frac = j / (POINTS_PER_LINE - 1);
+        const x = (frac - 0.5) * w * 1.3;
+        const baseY = line.yBase * h * 0.6;
+        const y =
+          baseY +
+          Math.sin(frac * line.frequency * 8 + t * line.speed * scrollFactor + line.offset) *
+            line.amplitude *
+            scrollFactor *
+            0.5 +
+          Math.cos(frac * line.frequency * 4 + t * line.speed * 0.6 + line.phase) *
+            line.amplitude *
+            0.3;
+        positions[j * 3] = x;
+        positions[j * 3 + 1] = y;
+        positions[j * 3 + 2] = 0;
+      }
+      geometries[i].attributes.position.needsUpdate = true;
+    });
+  });
+
+  return (
+    <group ref={groupRef}>
+      {lines.map((line, i) => (
+        <line_ key={i} geometry={geometries[i]}>
+          <lineBasicMaterial
+            color="#222222"
+            transparent
+            opacity={line.opacity}
+            linewidth={line.thickness}
+          />
+        </line_>
+      ))}
+    </group>
+  );
 }
 
 const AnimatedBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const scrollRef = useRef(0);
-  const linesRef = useRef<FlowLine[]>([]);
-  const animRef = useRef<number>(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
-    };
-    resize();
-
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(document.documentElement);
-
-    // Create lines
-    const lineCount = 12;
-    const lines: FlowLine[] = [];
-    for (let i = 0; i < lineCount; i++) {
-      lines.push({
-        points: [],
-        speed: 0.2 + Math.random() * 0.4,
-        thickness: 0.5 + Math.random() * 1.5,
-        opacity: 0.04 + Math.random() * 0.08,
-        offset: Math.random() * Math.PI * 2,
-        amplitude: 30 + Math.random() * 80,
-        frequency: 0.001 + Math.random() * 0.002,
-      });
-    }
-    linesRef.current = lines;
-
-    const handleScroll = () => {
-      scrollRef.current = window.scrollY;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    let time = 0;
-    const animate = () => {
-      if (!canvas || !ctx) return;
-      const w = canvas.width;
-      const h = canvas.height;
-      ctx.clearRect(0, 0, w, h);
-
-      const scrollFactor = 1 + scrollRef.current * 0.0003;
-      time += 0.005 * scrollFactor;
-
-      lines.forEach((line) => {
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(30, 30, 30, ${line.opacity})`;
-        ctx.lineWidth = line.thickness;
-        ctx.lineCap = "round";
-
-        const startY = (line.offset / (Math.PI * 2)) * h;
-        const steps = 200;
-
-        for (let j = 0; j <= steps; j++) {
-          const t = j / steps;
-          const x = t * w;
-          const y =
-            startY +
-            Math.sin(x * line.frequency + time * line.speed + line.offset) *
-              line.amplitude *
-              scrollFactor +
-            Math.cos(x * line.frequency * 0.5 + time * line.speed * 0.7) *
-              line.amplitude *
-              0.5;
-
-          if (j === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-        ctx.stroke();
-      });
-
-      animRef.current = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-      cancelAnimationFrame(animRef.current);
-      window.removeEventListener("scroll", handleScroll);
-      resizeObserver.disconnect();
-    };
-  }, []);
-
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 0 }}
-    />
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 50 }}
+        dpr={[1, 2]}
+        style={{ background: "transparent" }}
+        gl={{ alpha: true, antialias: true }}
+      >
+        <FlowLines />
+      </Canvas>
+    </div>
   );
 };
 
