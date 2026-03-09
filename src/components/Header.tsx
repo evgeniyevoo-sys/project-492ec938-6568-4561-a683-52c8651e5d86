@@ -73,11 +73,11 @@ const Header = () => {
                 key={item.path}
                 to={item.path}
                 onClick={() => setOpen(false)}
-                className={`text-sm py-1 transition-colors duration-200 ${
-                  location.pathname === item.path
-                    ? "text-foreground font-medium"
-                    : "text-muted-foreground"
-                }`}
+                className="text-sm py-1 transition-colors duration-200"
+                style={{
+                  color: location.pathname === item.path ? "#1c1c1e" : "rgba(28,28,30,0.5)",
+                  fontWeight: location.pathname === item.path ? 500 : 400,
+                }}
               >
                 {item.label}
               </Link>

@@ -25,7 +25,7 @@ const App = () => (
       <BrowserRouter>
         <AnimatedBackground />
         <Header />
-        <main className="pt-14">
+        <main className="pt-12">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/reviews" element={<Reviews />} />

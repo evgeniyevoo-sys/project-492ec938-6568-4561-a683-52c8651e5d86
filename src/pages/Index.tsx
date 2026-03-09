@@ -117,7 +117,7 @@ const Index = () => (
   <div style={{ position: "relative", zIndex: 1 }}>
     <HeroSection />
 
-    <section style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 140px" }}>
+    <section style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 140px", marginTop: 12 }}>
       {funnelSections.map((s, i) => (
         <FadeInSection key={i}>
           <div
