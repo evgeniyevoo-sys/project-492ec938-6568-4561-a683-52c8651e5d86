@@ -18,14 +18,16 @@ const Header = () => {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl"
+      className="fixed top-0 left-0 right-0 z-50"
       style={{
-        background: "rgba(5, 13, 26, 0.85)",
-        borderBottom: "1px solid rgba(0, 212, 255, 0.1)",
+        background: "rgba(245, 245, 247, 0.92)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        borderBottom: "1px solid rgba(28, 28, 30, 0.1)",
       }}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-12">
-        <Link to="/" className="text-base font-bold tracking-tight text-foreground">
+        <Link to="/" className="text-base font-bold tracking-tight" style={{ color: "#1c1c1e" }}>
           АнтиСистема
         </Link>
 
