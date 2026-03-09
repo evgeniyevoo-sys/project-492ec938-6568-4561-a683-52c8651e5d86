@@ -18,14 +18,16 @@ const Header = () => {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl"
+      className="fixed top-0 left-0 right-0 z-50"
       style={{
-        background: "rgba(5, 13, 26, 0.85)",
-        borderBottom: "1px solid rgba(0, 212, 255, 0.1)",
+        background: "rgba(245, 245, 247, 0.92)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        borderBottom: "1px solid rgba(28, 28, 30, 0.1)",
       }}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-12">
-        <Link to="/" className="text-base font-bold tracking-tight text-foreground">
+        <Link to="/" className="text-base font-bold tracking-tight" style={{ color: "#1c1c1e" }}>
           АнтиСистема
         </Link>
 
@@ -34,11 +36,11 @@ const Header = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`text-[13px] transition-colors duration-200 ${
-                location.pathname === item.path
-                  ? "text-foreground font-medium"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              className="text-[13px] transition-colors duration-200"
+              style={{
+                color: location.pathname === item.path ? "#1c1c1e" : "rgba(28,28,30,0.5)",
+                fontWeight: location.pathname === item.path ? 500 : 400,
+              }}
             >
               {item.label}
             </Link>
@@ -47,7 +49,8 @@ const Header = () => {
 
         <button
           onClick={() => setOpen(!open)}
-          className="lg:hidden text-foreground"
+          className="lg:hidden"
+          style={{ color: "#1c1c1e" }}
           aria-label="Toggle menu"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
@@ -56,10 +59,12 @@ const Header = () => {
 
       {open && (
         <div
-          className="lg:hidden backdrop-blur-2xl"
+          className="lg:hidden"
           style={{
-            background: "rgba(5, 13, 26, 0.95)",
-            borderBottom: "1px solid rgba(0, 212, 255, 0.1)",
+            background: "rgba(245, 245, 247, 0.96)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            borderBottom: "1px solid rgba(28, 28, 30, 0.1)",
           }}
         >
           <nav className="flex flex-col px-6 py-4 gap-3">
@@ -68,11 +73,11 @@ const Header = () => {
                 key={item.path}
                 to={item.path}
                 onClick={() => setOpen(false)}
-                className={`text-sm py-1 transition-colors duration-200 ${
-                  location.pathname === item.path
-                    ? "text-foreground font-medium"
-                    : "text-muted-foreground"
-                }`}
+                className="text-sm py-1 transition-colors duration-200"
+                style={{
+                  color: location.pathname === item.path ? "#1c1c1e" : "rgba(28,28,30,0.5)",
+                  fontWeight: location.pathname === item.path ? 500 : 400,
+                }}
               >
                 {item.label}
               </Link>

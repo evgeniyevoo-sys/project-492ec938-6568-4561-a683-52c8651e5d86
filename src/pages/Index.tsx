@@ -3,29 +3,38 @@ import FadeInSection from "@/components/FadeInSection";
 const HeroSection = () => (
   <section
     style={{
+      width: "92%",
+      maxWidth: 1200,
+      margin: "0 auto",
+      padding: 0,
       position: "relative",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      minHeight: "100vh",
-      padding: "0 24px",
     }}
   >
-    {/* Soft blue glow */}
     <div
       style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%,-50%)",
-        width: "min(600px,90vw)",
-        height: "min(600px,90vw)",
-        background: "radial-gradient(circle,rgba(77,184,255,0.08) 0%,transparent 70%)",
-        pointerEvents: "none",
+        background: "rgba(255,255,255,0.85)",
+        border: "1px solid rgba(28,28,30,0.12)",
+        borderRadius: 18,
+        boxShadow: "0 2px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+        padding: "24px 40px 28px",
+        position: "relative",
       }}
-    />
+    >
+      {/* macOS traffic light dots */}
+      <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
+        {["#ff5f57", "#ffbd2e", "#28c840"].map((c) => (
+          <div
+            key={c}
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              background: c,
+            }}
+          />
+        ))}
+      </div>
 
-    <div style={{ position: "relative", textAlign: "center", maxWidth: 680 }}>
       <p
         style={{
           fontSize: "clamp(0.7rem,1.4vw,0.85rem)",
@@ -33,7 +42,7 @@ const HeroSection = () => (
           letterSpacing: "0.18em",
           textTransform: "uppercase",
           color: "rgba(77,184,255,0.7)",
-          marginBottom: 18,
+          marginBottom: 14,
         }}
       >
         Дистанционный автономный комплекс
@@ -41,12 +50,12 @@ const HeroSection = () => (
 
       <h1
         style={{
-          fontSize: "clamp(2.4rem,6vw,4.4rem)",
+          fontSize: "clamp(2rem,5vw,3.6rem)",
           fontWeight: 800,
           letterSpacing: "-0.04em",
           lineHeight: 1.05,
-          color: "#0a0a12",
-          marginBottom: 28,
+          color: "#1c1c1e",
+          marginBottom: 20,
         }}
       >
         АнтиСистема —{" "}
@@ -61,7 +70,7 @@ const HeroSection = () => (
         </span>
       </h1>
 
-      <div style={{ width: 48, height: 3, background: "linear-gradient(90deg,#29a3e6,#66ccff)", borderRadius: 2, margin: "0 auto" }} />
+      <div style={{ width: 48, height: 3, background: "linear-gradient(90deg,#29a3e6,#66ccff)", borderRadius: 2 }} />
     </div>
   </section>
 );
@@ -108,7 +117,7 @@ const Index = () => (
   <div style={{ position: "relative", zIndex: 1 }}>
     <HeroSection />
 
-    <section style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 140px" }}>
+    <section style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 140px", marginTop: 12 }}>
       {funnelSections.map((s, i) => (
         <FadeInSection key={i}>
           <div
