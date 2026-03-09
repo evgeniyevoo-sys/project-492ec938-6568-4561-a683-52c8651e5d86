@@ -12,53 +12,29 @@ const HeroSection = () => (
   >
     <div
       style={{
-        background: "rgba(255,255,255,0.85)",
-        border: "1px solid rgba(28,28,30,0.12)",
+        background: "rgba(255,255,255,0.45)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: "1px solid rgba(28,28,30,0.08)",
         borderRadius: 18,
-        boxShadow: "0 2px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+        boxShadow: "0 2px 24px rgba(0,0,0,0.06)",
         padding: "24px 40px 28px",
         position: "relative",
+        textAlign: "center",
       }}
     >
-      {/* macOS traffic light dots */}
-      <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
-        {["#ff5f57", "#ffbd2e", "#28c840"].map((c) => (
-          <div
-            key={c}
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: "50%",
-              background: c,
-            }}
-          />
-        ))}
-      </div>
-
-      <p
-        style={{
-          fontSize: "clamp(0.7rem,1.4vw,0.85rem)",
-          fontWeight: 600,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: "rgba(77,184,255,0.7)",
-          marginBottom: 14,
-        }}
-      >
-        Дистанционный автономный комплекс
-      </p>
-
       <h1
         style={{
           fontSize: "clamp(2rem,5vw,3.6rem)",
-          fontWeight: 800,
+          fontWeight: 900,
           letterSpacing: "-0.04em",
           lineHeight: 1.05,
           color: "#1c1c1e",
-          marginBottom: 20,
+          marginBottom: 16,
         }}
       >
-        АнтиСистема —{" "}
+        АнтиСистема —
+        <br />
         <span
           style={{
             background: "linear-gradient(135deg,#29a3e6,#4db8ff,#66ccff)",
@@ -70,7 +46,18 @@ const HeroSection = () => (
         </span>
       </h1>
 
-      <div style={{ width: 48, height: 3, background: "linear-gradient(90deg,#29a3e6,#66ccff)", borderRadius: 2 }} />
+      <p
+        style={{
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          color: "rgba(28,28,30,0.4)",
+          margin: "0 auto",
+        }}
+      >
+        Дистанционный автономный комплекс
+      </p>
     </div>
   </section>
 );
