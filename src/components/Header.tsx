@@ -49,7 +49,8 @@ const Header = () => {
 
         <button
           onClick={() => setOpen(!open)}
-          className="lg:hidden text-foreground"
+          className="lg:hidden"
+          style={{ color: "#1c1c1e" }}
           aria-label="Toggle menu"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
