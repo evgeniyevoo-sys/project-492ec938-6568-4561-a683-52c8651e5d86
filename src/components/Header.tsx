@@ -59,10 +59,12 @@ const Header = () => {
 
       {open && (
         <div
-          className="lg:hidden backdrop-blur-2xl"
+          className="lg:hidden"
           style={{
-            background: "rgba(5, 13, 26, 0.95)",
-            borderBottom: "1px solid rgba(0, 212, 255, 0.1)",
+            background: "rgba(245, 245, 247, 0.96)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            borderBottom: "1px solid rgba(28, 28, 30, 0.1)",
           }}
         >
           <nav className="flex flex-col px-6 py-4 gap-3">
